@@ -5386,7 +5386,7 @@ union bpf_attr {
  *	Return
  *		Current *ktime*.
  *
- * long xdp_hints_btf(struct xdp_buff *xdp_md, u64 flags)
+ * long bpf_xdp_hints_btf(struct xdp_buff *xdp_md, u64 flags)
  *	Description
  *		Update and get info on XDP hints ctx state.
  *
