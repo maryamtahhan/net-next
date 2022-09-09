@@ -139,9 +139,15 @@ static int __xsk_rcv_zc(struct xdp_sock *xs, struct xdp_buff *xdp, u32 len)
 	struct xdp_buff_xsk *xskb = container_of(xdp, struct xdp_buff_xsk, xdp);
 	u64 addr;
 	int err;
+	u32 flags = 0;
 
 	addr = xp_get_handle(xskb);
-	err = xskq_prod_reserve_desc(xs->rx, addr, len);
+	if (xdp_buff_has_hints_compat(xdp))
+		flags |= XSK_DESC_HAS_HINTS_COMMON;
+	if (xdp_buff_has_hints(xdp))
+		flags |= XSK_DESC_HAS_HINTS;
+
+	err = xskq_prod_reserve_desc(xs->rx, addr, len, flags);
 	if (err) {
 		xs->rx_queue_full++;
 		return err;

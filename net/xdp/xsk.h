@@ -11,6 +11,16 @@
 #define XSK_NEXT_PG_CONTIG_SHIFT 0
 #define XSK_NEXT_PG_CONTIG_MASK BIT_ULL(XSK_NEXT_PG_CONTIG_SHIFT)
 
+//MT TODO MOVE FROM USING BIT()
+
+enum xsk_options {
+	XSK_DESC_HAS_HINTS_COMMON	= 1, /* xdp_hints_common */
+	XSK_DESC_HAS_HINTS	        = 2,/* xdp_hints */
+};
+
+#define XSK_DESC_HINTS_ORIGIN_MASK	(XSK_DESC_HAS_HINTS_COMMON |	\
+					 XSK_DESC_HAS_HINTS)
+
 struct xdp_ring_offset_v1 {
 	__u64 producer;
 	__u64 consumer;
